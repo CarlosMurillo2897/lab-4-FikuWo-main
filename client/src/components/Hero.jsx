@@ -5,13 +5,16 @@ const Hero = () => {
     <div className=' py-5'>
       <Container className='d-flex justify-content-center'>
         <Card className='p-5 d-flex flex-column align-items-center hero-card bg-light w-75'>
-          <h1 className='text-center mb-4'>SE 3316 - Lab 3</h1>
+          <h1 className='text-center mb-4'>About</h1>
           <p className='text-center mb-4'>
-            SE 3316 - Lab 3
+            A small application that use Authentication with JWT and display a list of Destinations created by users.
           </p>
           <div className='d-flex'>
             <Button variant='primary' href='/login' className='me-3'>
               Sign In
+            </Button>
+            <Button variant='success' href='/destinations' className='me-3'>
+              List of Destinations
             </Button>
             <Button variant='secondary' href='/register'>
               Register

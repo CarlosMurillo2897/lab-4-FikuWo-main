@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-// import { Link, useNavigate } from 'react-router-dom';
 import { Form, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import FormContainer from '../components/FormContainer';
@@ -11,6 +10,9 @@ import { setCredentials } from '../slices/authSlice';
 const ProfileScreen = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
+  const [disabled, setDisabled] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [emailVerified, setEmailVerified] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
@@ -23,7 +25,10 @@ const ProfileScreen = () => {
   useEffect(() => {
     setName(userInfo.name);
     setEmail(userInfo.email);
-  }, [userInfo.email, userInfo.name]);
+    setNickname(userInfo.nickname);
+    setEmailVerified(userInfo.emailVerified);
+    setDisabled(userInfo.disabled);    
+  }, [userInfo.email, userInfo.name, userInfo.nickname, userInfo.disabled, userInfo.emailVerified]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -36,6 +41,9 @@ const ProfileScreen = () => {
           name,
           email,
           password,
+          nickname,
+          disabled,
+          emailVerified
         }).unwrap();
         console.log(res);
         dispatch(setCredentials(res));
@@ -67,6 +75,33 @@ const ProfileScreen = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Form.Control>
+        </Form.Group>
+        <Form.Group className='my-2' controlId='nickname'>
+          <Form.Label>Nickname</Form.Label>
+          <Form.Control
+            type='nickname'
+            placeholder='Enter nickname'
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+          ></Form.Control>
+        </Form.Group>
+        <Form.Group className='my-2' controlId='disabled'>
+          <Form.Label>Disabled</Form.Label>
+          <Form.Check
+            type='checkbox'
+            checked={disabled}
+            disabled={true}
+            onChange={(e) => setDisabled(e.target.value)}
+          ></Form.Check>
+        </Form.Group>
+        <Form.Group className='my-2' controlId='emailVerified'>
+          <Form.Label>Email Verified</Form.Label>
+          <Form.Check
+            type='checkbox'
+            checked={emailVerified}
+            disabled={emailVerified}
+            onChange={(e) => setEmailVerified(e.target.checked)}
+          ></Form.Check>
         </Form.Group>
         <Form.Group className='my-2' controlId='password'>
           <Form.Label>Password</Form.Label>

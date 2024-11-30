@@ -22,6 +22,17 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    nickname: {
+      type: String,
+      required: true,
+      unique: true
+    },
+    disabled: {
+      type: Boolean
+    },
+    emailVerified: {
+      type: Boolean
+    }
   },
   {
     timestamps: true,

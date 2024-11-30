@@ -7,6 +7,11 @@ const authUser = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email });
 
+  if(user.disabled) {
+    res.status(401);
+    throw new Error('User disabled. Contact site administrator.');
+  }
+
   if (user && (await user.matchPassword(password))) {
     generateToken(res, user._id);
 
@@ -14,6 +19,9 @@ const authUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      nickname: user.nickname,
+      disabled: user.disabled,
+      emailVerified: user.emailVerified
     });
   } else {
     res.status(401);
@@ -22,9 +30,9 @@ const authUser = asyncHandler(async (req, res) => {
 });
 
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password, nickname, disabled, emailVerified } = req.body;
 
-  const userExists = await User.findOne({ email });
+  const userExists = await User.findOne({ $or: [ {email}, {nickname} ] });
 
   if (userExists) {
     res.status(400);
@@ -35,6 +43,9 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     email,
     password,
+    nickname,
+    disabled,
+    emailVerified
   });
 
   if (user) {
@@ -44,6 +55,9 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      nickname: user.nickname,
+      disabled: user.disabled,
+      emailVerified: user.emailVerified
     });
   } else {
     res.status(400);
@@ -67,6 +81,9 @@ const getUserProfile = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
+      nickname: user.nickname,
+      disabled: user.disabled,
+      emailVerified: user.emailVerified
     });
   } else {
     res.status(404);
@@ -80,6 +97,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (user) {
     user.name = req.body.name || user.name;
     user.email = req.body.email || user.email;
+    user.nickname = req.body.nickname || user.nickname;
+    user.disabled = req.body.disabled || user.disabled;
+    user.emailVerified = req.body.emailVerified || user.emailVerified;
 
     if (req.body.password) {
       user.password = req.body.password;
@@ -91,6 +111,9 @@ const updateUserProfile = asyncHandler(async (req, res) => {
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,
+      nickname: user.nickname,
+      disabled: user.disabled,
+      emailVerified: user.emailVerified
     });
   } else {
     res.status(404);
