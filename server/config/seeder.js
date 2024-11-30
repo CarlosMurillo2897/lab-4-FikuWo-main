@@ -15,7 +15,10 @@ const seedData = async () => {
     try {
         await destroyData();
         console.log(`Seeding DB.`);
-        await User.insertMany(users);
+        users.forEach(
+          async user => await User.create(user)
+        );
+        
     } catch (error) {
         console.error(`Error: ${error.message}`);
         process.exit(1);
