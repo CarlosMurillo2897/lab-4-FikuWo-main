@@ -19,6 +19,10 @@ import PrivateRoute from './components/PrivateRoute.jsx';
 import AdminRoute from './components/AdminRoute.jsx';
 import UserScreen from './screens/UserScreen.jsx';
 
+import AcceptableUsePolicy from './screens/AcceptableUsePolicy.jsx';
+import DMCANoticeTakeDownPolicy from './screens/DMCANoticeTakeDownPolicy.jsx';
+import SecurityPrivacyPolicy from './screens/SecurityPrivacyPolicy.jsx';
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
@@ -31,6 +35,9 @@ const router = createBrowserRouter(
       <Route path='' element={<AdminRoute />}>
         <Route path='/users' element={<UserScreen />} />
       </Route>
+      <Route path='/AcceptableUsePolicy' element={<AcceptableUsePolicy />} />
+      <Route path='/DMCANoticeTakeDownPolicy' element={<DMCANoticeTakeDownPolicy />} />
+      <Route path='/SecurityPrivacyPolicy' element={<SecurityPrivacyPolicy />} />
     </Route>
   )
 );
