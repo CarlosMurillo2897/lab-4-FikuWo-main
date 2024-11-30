@@ -1,9 +1,9 @@
 import express from 'express';
 import {
   authUser,
+  getUsers,
   registerUser,
   logoutUser,
-  getUserProfile,
   updateUserProfile,
 } from '../controllers/userController.js';
 import { protect } from '../middleware/authMiddleware.js';
@@ -15,7 +15,8 @@ router.post('/auth', authUser);
 router.post('/logout', logoutUser);
 router
   .route('/profile')
-  .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
+
+router.get('/users', getUsers);
 
 export default router;

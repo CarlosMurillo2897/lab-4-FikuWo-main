@@ -11,26 +11,33 @@ const userSchema = mongoose.Schema(
     name: {
       type: String,
       required: true,
+      maxlength: 32
     },
     email: {
       type: String,
       required: true,
       unique: true,
-      validate: [validateEmail, 'Invalid email address.']
+      validate: [validateEmail, 'Invalid email address.'],
+      maxlength: 32
     },
     password: {
       type: String,
       required: true,
+      maxlength: 32
     },
     nickname: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
+      maxlength: 32
     },
     disabled: {
       type: Boolean
     },
     emailVerified: {
+      type: Boolean
+    },
+    isAdmin: {
       type: Boolean
     }
   },
